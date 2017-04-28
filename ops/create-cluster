@@ -10,12 +10,12 @@ sleep 10
 
 echo "creating azure container service named $SERVICE_NAME"
 az acs create --resource-group="${RG_NAME}" --location="${DC_LOCATION}" \
-  --orchestrator-type=kubernetes --master-count=1 --agent-count=6 \
-  --agent-vm-size="Standard_DS12" \
+  --orchestrator-type=kubernetes --master-count=${MASTER_COUNT} --agent-count=${AGENT_COUNT} \
+  --agent-vm-size=${VM_SIZE} \
   --admin-username="ops" \
   --name="${SERVICE_NAME}" \
   --dns-prefix="${DEPLOYMENT_PREFIX}" \
-  --ssh-key-value @/Users/tim/.ssh/id_rsa.pub
+  --ssh-key-value @../ssh/id_rsa.pub
 
 sleep 10
 

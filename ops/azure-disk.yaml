@@ -6,4 +6,4 @@ provisioner: kubernetes.io/azure-disk
 parameters:
   skuName: Premium_LRS
   location: eastus
-  storageAccount: fortispv
+  storageAccount: testk8spv
