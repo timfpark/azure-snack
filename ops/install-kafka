@@ -1,0 +1,1 @@
+helm install --name kafka --namespace kafka ../charts/kafka

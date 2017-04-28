@@ -1,0 +1,27 @@
+image:
+  name: solsson/kafka-persistent
+  tag: 0.10.1.1
+  pullPolicy: IfNotPresent
+
+manager:
+  replicas: 1
+  containerPort: 9000
+  externalPort: 80
+
+persistentVolume:
+  accessModes:
+    - ReadWriteOnce
+  size: 127Gi
+  storageClass: "fast"
+
+kafka:
+  port: 9092
+  replicas: 3
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 100m
+
+zookeeper:
+  replicas: 5

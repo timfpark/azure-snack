@@ -1,0 +1,1 @@
+helm install --name postgis --namespace postgis ../charts/postgis

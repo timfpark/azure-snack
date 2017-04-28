@@ -1,0 +1,45 @@
+#!/bin/bash
+
+echo "setting Azure subscription to $SUBSCRIPTION_ID"
+az account set --subscription="${SUBSCRIPTION_ID}"
+
+echo "creating resource group $RG_NAME in $DC_LOCATION"
+az group create --name "${RG_NAME}" --location "${DC_LOCATION}"
+
+sleep 10
+
+echo "creating azure container service named $SERVICE_NAME"
+az acs create --resource-group="${RG_NAME}" --location="${DC_LOCATION}" \
+  --orchestrator-type=kubernetes --master-count=1 --agent-count=6 \
+  --agent-vm-size="Standard_DS12" \
+  --admin-username="ops" \
+  --name="${SERVICE_NAME}" \
+  --dns-prefix="${DEPLOYMENT_PREFIX}" \
+  --ssh-key-value @/Users/tim/.ssh/id_rsa.pub
+
+sleep 10
+
+echo "getting kubernetes credentials from azure container service cluster"
+az acs kubernetes get-credentials --resource-group=$RG_NAME --name=$SERVICE_NAME
+
+sleep 10
+
+echo "creating kubernetes persistent volume storage account $PV_STORAGE_ACCOUNT_NAME"
+az storage account create -n $PV_STORAGE_ACCOUNT_NAME -l $DC_LOCATION -g $RG_NAME --sku Premium_LRS
+export PV_STORAGE_ACCOUNT_KEY=`az storage account keys list -n $PV_STORAGE_ACCOUNT_NAME -g $RG_NAME --query [0].value --output tsv`
+
+echo "creating vhds container in persistent volume storage account"
+az storage container create --name vhds --account-key=$PV_STORAGE_ACCOUNT_KEY --account-name=$PV_STORAGE_ACCOUNT_NAME
+
+cp azure-disk.yaml.tmpl azure-disk.yaml
+sed -i.bu "s/DEPLOYMENT_PREFIX/$DEPLOYMENT_PREFIX/" azure-disk.yaml
+
+echo "creating persistent volume storage class"
+kubectl create -f azure-disk.yaml
+
+sleep 10
+
+echo "initializing helm"
+helm init
+
+sleep 30

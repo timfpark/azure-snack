@@ -1,0 +1,1 @@
+helm install --name cassandra --namespace cassandra ../charts/cassandra

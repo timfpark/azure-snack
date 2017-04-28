@@ -1,0 +1,14 @@
+export RG_NAME=${DEPLOYMENT_PREFIX}-k8s-rg
+export DC_LOCATION=eastus
+export SERVICE_NAME=${DEPLOYMENT_PREFIX}-k8s-service
+export DEIS_STORAGE_ACCOUNT_NAME=${DEPLOYMENT_PREFIX}deis
+export PV_STORAGE_ACCOUNT_NAME=${DEPLOYMENT_PREFIX}pv
+export PV_STORAGE_CLASS=${DEPLOYMENT_PREFIX}pv
+
+./create-cluster
+
+./install-deis
+./install-cassandra
+./install-kafka
+./install-spark
+./install-postgis
