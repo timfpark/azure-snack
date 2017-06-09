@@ -1,0 +1,23 @@
+# Default values for kibana.
+# Service
+name: kibana-logging
+app: kibana-logging
+port: 5601
+# Deployment
+component: kibana-logging
+replicas: 3
+container_name: kibana-logging
+image: kibana:4.6.4
+#image: docker.elastic.co/kibana/kibana:5.2.0
+# keep request = limit to keep this container in guaranteed class
+cpu_limit: 200m
+cpu_requests: 200m
+env_name: ELASTICSEARCH_URL
+env_value: http://es-es.esearch.svc.cluster.local:9200
+container_port: 5601
+
+env_vars:
+  - name: XPACK_SECURITY_ENABLED
+    value: false
+  - name: XPACK_MONITORING_ENABLED
+    value: false

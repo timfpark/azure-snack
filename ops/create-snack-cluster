@@ -15,3 +15,5 @@ export PV_STORAGE_CLASS=${DEPLOYMENT_PREFIX}pv
 ./install-kafka
 ./install-spark
 ./install-postgis
+./install-elasticsearch
+./install-kibana

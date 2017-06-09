@@ -1,0 +1,37 @@
+# Default values for elasticsearch.
+# This is a YAML-formatted file.
+# Declare name/value pairs to be passed into your templates.
+# name: value
+
+Name: es
+PeerPort: 2380
+ClientPort: 2379
+Component: "elasticsearch"
+#Image: "jetstack/elasticsearch-pet"
+Image: "jetstack/elasticsearch-pet"
+ImageTag: "2.4.0"
+#ImageTag: "5.2.2"
+ImagePullPolicy: "Always"
+ClientReplicas: 2
+ClientCpuRequests: "25m"
+ClientMemoryRequests: "4Gi"
+ClientCpuLimits: "1"
+ClientMemoryLimits: "6Gi"
+ClientHeapSize: "3500m"
+MasterReplicas: 2
+MasterCpuRequests: "25m"
+MasterMemoryRequests: "256Mi"
+MasterCpuLimits: "1"
+MasterMemoryLimits: "512Mi"
+MasterHeapSize: "128m"
+DataReplicas: 2
+DataCpuRequests: "250m"
+DataMemoryRequests: "4Gi"
+DataCpuLimits: "1"
+DataMemoryLimits: "6Gi"
+DataHeapSize: "3500m"
+DataStorage: "128Gi"
+DataStorageClass: "fast"
+DataTerminationGracePeriodSeconds: 3600
+ServiceDns: "elasticsearch-elasticsearch"
+#ServiceDns: {{ printf "%s-cluster-%s" .Release.Name .Values.Name | trunc 24 }}
