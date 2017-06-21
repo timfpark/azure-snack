@@ -41,16 +41,16 @@ Worker:
   ContainerPort: 8081
   Resources:
     Requests:
-      Cpu: "700m"
-      Memory: "3Gi"
+      Cpu: "500m"
+      Memory: "4Gi"
     Limits:
-      Cpu: "700m"
-      Memory: "3Gi"
+      Cpu: "1000m"
+      Memory: "4Gi"
   Environment:
   - name: SPARK_DAEMON_MEMORY
-    value: 1g
+    value: 4g
   - name: SPARK_WORKER_MEMORY
-    value: 1g
+    value: 4g
 
 Zeppelin:
   Name: zeppelin
